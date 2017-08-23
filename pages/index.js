@@ -6,41 +6,57 @@ import Radium, {Style, StyleRoot} from "radium";
 import Layout from "../comps/layout";
 import Statement from "../comps/js-statement";
 
-const example = {
-  type: "module",
-  imports: [{
-    type: "import",
-    name: "test1",
-    module: "somemodule"
-  }],
-  exports: [{
-    type: "export",
-    name: "default",
-    value: {
-      type: "function",
-      name: "",
-      args: [],
-      sequence: {
-        statements: []
-      }
-    }
-  }],
-  sequence: {
-    statements: [{
-      type: "constant-declaration",
-      name: "someConstant",
-      value: {
-        type: "string",
-        value: "hello world!"
-      }
-    }]
-  }
-};
 
 class Index extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      example : {
+        type: "module",
+        imports: {
+          statements: [{
+            type: "import",
+            key: "42344",
+            name: "test1",
+            module: "somemodule"
+          }]
+        },
+        exports: {
+          statements: [{
+            type: "export",
+            name: "default",
+            key: "55234",
+            value: {
+              type: "function",
+              name: "",
+              args: [],
+              sequence: {
+                statements: []
+              }
+            }
+          }]
+        },
+        sequence: {
+          statements: [{
+            type: "constant-declaration",
+            name: "someConstant",
+            key: "123",
+            value: {
+              type: "string",
+              value: "hello world!"
+            }
+          },{
+            type: "constant-declaration",
+            name: "someConstant",
+            key: "2344",
+            value: {
+              type: "string",
+              value: "hello world!"
+            }
+          }]
+        }
+      }
+    };
   }
 
   static async getInitialProps ({ query, req }) {
@@ -58,11 +74,15 @@ class Index extends React.Component {
   componentWillUnmount() {
   }
 
+  handleChange = (newValue) => {
+    this.setState({example: newValue});
+  }
+
   render() {
 
     const styles = {
       root: {
-        textAlign: "center",
+        textAlign: "left",
         width: "100%",
         height: "20em",
       },
@@ -81,7 +101,10 @@ class Index extends React.Component {
             <link href="https://fonts.googleapis.com/css?family=Fira+Mono" rel="stylesheet" />
           </Head>
           <Layout>
-            <Statement value={example} />
+            <Statement
+              value={this.state.example}
+              onChange={this.handleChange}
+            />
           </Layout>
           <Style rules={{
             body: {
@@ -90,7 +113,7 @@ class Index extends React.Component {
               color: "#ffed00"
             },
             html: {
-              background: "#222000",
+              background: "#2f3039",
               fontSize: "100%"
             },
             mediaQueries: {

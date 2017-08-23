@@ -2,11 +2,20 @@
 
 import Radium from "radium";
 
-import ModuleImport from "./js-module-import";
-import ModuleExport from "./js-module-export";
+import Imports from "./js-imports";
+import Exports from "./js-exports";
 import Sequence from "./js-sequence";
 
+
 class Module extends React.Component {
+
+  handleChangeMerge = (newValue) => {
+    this.props.onChange ? this.props.onChange(Object.assign(
+      {},
+      this.props.value,
+      newValue
+    )) : "";
+  }
 
   render() {
 
@@ -15,17 +24,13 @@ class Module extends React.Component {
       }
     };
 
+    const mod = this.props.value;
+
     return (
       <div style={styles.root}>
-        {this.props.value.imports.map(moduleImport => {
-          return (<ModuleImport key={moduleImport.name} value={moduleImport} />);
-        })}
-
-        <Sequence value={this.props.value.sequence} />
-
-        {this.props.value.exports.map(moduleExport => {
-          return (<ModuleExport key={moduleExport.name} value={moduleExport} />);
-        })}
+        <Imports value={mod.imports} onChange={newValue => this.handleChangeMerge({imports: newValue})} />
+        <Sequence value={mod.sequence} onChange={newValue => this.handleChangeMerge({sequence: newValue})}/>
+        <Exports value={mod.exports} onChange={newValue => this.handleChangeMerge({exports: newValue})} />
       </div>
     );
   }

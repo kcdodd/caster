@@ -8,7 +8,7 @@ class Layout extends React.Component {
 
     const styles = {
       root: {
-        textAlign: "center",
+        textAlign: "left",
         width: "100%",
         height: "20em",
       },
