@@ -1,0 +1,18 @@
+{
+  "development": {
+    "artificialDelay": 0,
+    "name": "servername",
+    "http": {
+      "port": 3000
+    },
+    "db": {
+      "database": "dbname",
+      "host": "localhost",
+      "port": 5432,
+      "username": "dbusername",
+      "password": "dbpassword"
+    },
+    "compress": true,
+    "favicon": null
+  }
+}
