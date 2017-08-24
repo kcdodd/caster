@@ -28,21 +28,25 @@ class FunctionStatement extends React.Component {
         color: "#bfbfbf"
       },
       scope: {
-        position: "relative",
-        left: "1rem"
-      }
+        backgroundColor: "#999899",
+        borderLeft: "2px solid #77defa",
+        borderRight: "2px solid #fa7f77"
+      },
+      rounded: {
+        borderRadius: "5px"
+      },
     };
 
     const mod = this.props.value;
 
     return (
-      <div style={styles.root}>
+      <div style={[styles.root]}>
         <div>
           <span style={styles.parenth}>(</span>
           <span style={styles.parenth}>)</span>
           <span style={styles.parenth}>&nbsp;=>&nbsp;&#123;</span>
         </div>
-        <div style={styles.scope}>
+        <div style={[styles.scope, styles.rounded]}>
           <Sequence value={mod.sequence} onChange={newValue => this.handleChange({sequence: newValue})} />
         </div>
         <div style={styles.parenth}>&#125;</div>

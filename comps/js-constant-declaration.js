@@ -25,7 +25,16 @@ class ConstantDeclarationStatement extends React.Component {
 
     const styles = {
       root: {
-        padding: "3px"
+        display: "inline-block",
+        padding: "3px",
+        margin: "1px 1px",
+        backgroundColor: "#2f3039"
+      },
+      rounded: {
+        borderRadius: "5px"
+      },
+      shadow: {
+        boxShadow: `1px 1px 11px #2f3039`
       },
       keyword: {
         color: "#dc83fb"
@@ -42,11 +51,12 @@ class ConstantDeclarationStatement extends React.Component {
     const constant = this.props.value;
 
     return (
-      <div style={styles.root}>
+      <div style={[styles.root, styles.rounded, styles.shadow]}>
         <span style={styles.keyword}>const&nbsp;</span>
         <Textify
           style={styles.name}
           value={constant.name}
+          regex={/^[a-zA-Z_][a-zA-Z0-9_]*$/}
           onChange={(e) => this.handleChange({name: e.target.value})}
         />
         <span style={styles.equals}>&nbsp;=&nbsp;</span>

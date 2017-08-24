@@ -39,6 +39,14 @@ class Index extends React.Component {
                     type: "string",
                     value: "hello world!"
                   }
+                },{
+                  type: "constant-declaration",
+                  name: "someConstant",
+                  key: "6544",
+                  value: {
+                    type: "string",
+                    value: "hello world!"
+                  }
                 }]
               }
             }
@@ -83,14 +91,7 @@ class Index extends React.Component {
     const styles = {
       root: {
         textAlign: "left",
-        width: "100%",
-        height: "20em",
-      },
-      vmiddle: {
-        margin: "0px",
-        position: "relative",
-        top: "50%",
-        transform: "translateY(-50%)"
+        width: "100%"
       }
     };
 
@@ -113,7 +114,7 @@ class Index extends React.Component {
               color: "#ffed00"
             },
             html: {
-              background: "#2f3039",
+              background: "#8a8c9e",
               fontSize: "100%"
             },
             mediaQueries: {

@@ -9,14 +9,7 @@ class Layout extends React.Component {
     const styles = {
       root: {
         textAlign: "left",
-        width: "100%",
-        height: "20em",
-      },
-      vmiddle: {
-        margin: "0px",
-        position: "relative",
-        top: "50%",
-        transform: "translateY(-50%)"
+        width: "100%"
       }
     };
 

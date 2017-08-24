@@ -22,8 +22,57 @@ class Textify extends React.Component {
 
   updateInputWidth = () => {
     if (this.sizer && this.sizer.scrollWidth !== this.state.sizerWidth) {
-      this.setState({sizerWidth: this.sizer.scrollWidth})
+      this.setState({sizerWidth: this.sizer.scrollWidth});
     }
+  }
+
+  styles = () => {
+    const width = this.state.sizerWidth ? this.state.sizerWidth + 5 : 50;
+    const color = this.props.style ? this.props.style.color || "#000000" : "#000000";
+    const shadow = `1px 1px 11px ${this.props.style ? this.props.style.color || "#000000" : "#000000"}`;
+    const background = this.props.style ? this.props.style.backgroundColor || "#ffffff" : "#ffffff";
+
+
+    return {
+      inputFont: {
+        fontSize: "1rem",
+        color: this.props.style.color,
+        fontFamily: "Fira Mono, Courier, Helvetica, sans-serif"
+      },
+      rounded: {
+        borderRadius: "5px"
+      },
+      shadow: {
+        boxShadow: shadow
+      },
+      string: {
+        height: "1rem",
+        backgroundColor: background,
+        padding: "0px 5px"
+      },
+      inputContainer: {
+        display: "inline-block",
+        height: "1rem",
+        overflow: "visible",
+        width: `${width}px`,
+        backgroundColor: background
+      },
+      input: {
+        background: background,
+        border: "none",
+        height: "1rem",
+        width: `${width}px`
+      },
+      sizer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        visibility: 'hidden',
+        height: 0,
+        overflow: 'scroll',
+        whiteSpace: 'pre'
+      }
+    };
   }
 
   handleClick = () => {
@@ -48,52 +97,20 @@ class Textify extends React.Component {
     }
   }
 
+  handleChange = (e) => {
+    if (this.props.regex && !this.props.regex.test(e.target.value)){
+      return;
+    }
+
+    if (this.props.onChange) {
+      this.props.onChange(e);
+    }
+  }
+
   render() {
 
     const value = this.props.value;
-    const width = this.state.sizerWidth ? this.state.sizerWidth + 5 : 10;
-
-    const styles = {
-      inputFont: {
-        fontSize: "1rem",
-        color: this.props.style.color,
-        fontFamily: "Fira Mono, Courier, Helvetica, sans-serif"
-      },
-      rounded: {
-        borderRadius: "5px"
-      },
-      shadow: {
-        boxShadow: `1px 1px 11px ${this.props.style.color}`
-      },
-      string: {
-        height: "1rem",
-        backgroundColor: this.props.style.backgroundColor
-      },
-      inputContainer: {
-        display: "inline-block",
-        height: "1rem",
-        overflow: "hidden",
-        width: `${width}px`,
-        backgroundColor: this.props.style.backgroundColor
-      },
-      input: {
-        background: this.props.style.backgroundColor,
-        border: "none",
-        height: "1rem",
-        paddingLeft: "5px",
-        width: `${width}px`
-      },
-      sizer: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        visibility: 'hidden',
-        height: 0,
-        overflow: 'scroll',
-        whiteSpace: 'pre'
-      }
-    };
-
+    const styles = this.styles();
 
     if (this.state.editing) {
       return (
@@ -105,7 +122,7 @@ class Textify extends React.Component {
           >
             <input
               value={value}
-              onChange={this.props.onChange}
+              onChange={this.handleChange}
               type="text"
               style={[styles.input, styles.inputFont]}
               ref={(input) => { this.stringEditor = input; }}

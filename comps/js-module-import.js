@@ -18,7 +18,16 @@ class ImportStatement extends React.Component {
 
     const styles = {
       root: {
-        padding: "3px"
+        display: "inline-block",
+        padding: "3px",
+        margin: "1px 1px",
+        backgroundColor: "#2f3039"
+      },
+      rounded: {
+        borderRadius: "5px"
+      },
+      shadow: {
+        boxShadow: `1px 1px 11px #2f3039`
       },
       keyword: {
         color: "#dc83fb"
@@ -32,14 +41,14 @@ class ImportStatement extends React.Component {
       },
       module: {
         backgroundColor: "#4d4f5e",
-        color: "#25a3ff"
+        color: "#77defa"
       }
     };
 
     const imp = this.props.value;
 
     return (
-      <div style={styles.root}>
+      <div style={[styles.root, styles.rounded, styles.shadow]}>
         <span style={styles.keyword}>import&nbsp;</span>
         <Textify
           style={styles.name}

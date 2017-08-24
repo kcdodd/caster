@@ -8,12 +8,14 @@ class NullStatement extends React.Component {
 
     const styles = {
       root: {
+        color: "#ebb458",
+        display: "inline-block"
       }
     };
 
     return (
       <div style={styles.root}>
-
+        null
       </div>
     );
   }

@@ -2,6 +2,8 @@
 
 import Radium from "radium";
 
+import Stem from "./js-stem";
+
 import Module from "./js-module.js";
 
 import VariableDeclarationStatement from "./js-variable-declaration";
@@ -33,6 +35,7 @@ import ForOfStatement from "./js-for-of";
 
 const typeToComponent = type => {
   switch(type) {
+    case "stem": return Stem;
     case "module": return Module;
     case "variable-declaration": return VariableDeclarationStatement;
     case "variable": return VariableStatement;
@@ -73,7 +76,7 @@ class Statement extends React.Component {
       );
     }
 
-    return (<div>{`Component type '${this.props.value.type}' could not be determined.`}</div>)
+    return (<div style={{display: "inline-block"}}>{`Component type '${this.props.value.type}' could not be determined.`}</div>)
   }
 }
 

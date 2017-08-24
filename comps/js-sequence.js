@@ -8,6 +8,7 @@ import Statement from "./js-statement";
 class Sequence extends React.Component {
 
   handleChangeStatement = newValue => {
+
     this.props.onChange ? this.props.onChange(Object.assign(
       {},
       this.props.value,
@@ -50,6 +51,20 @@ class Sequence extends React.Component {
 
     const styles = {
       root: {
+        display: "inline-block"
+      },
+      header: {
+        display: "inline-block",
+        padding: "3px",
+        margin: "1px 1px",
+        width: "1.5rem",
+        height: "1.5rem",
+        textAlign: "center",
+        verticalAlign: "top",
+        fontSize: "1rem",
+        color: "#ffffff",
+        fontFamily: "Fira Mono, Courier, Helvetica, sans-serif",
+        cursor: "pointer"
       }
     };
 
@@ -57,14 +72,20 @@ class Sequence extends React.Component {
 
     return (
       <div style={styles.root}>
-        {sequence.statements.map(statement => {
+        {sequence.statements.map((statement, index) => {
           return (
-            <Statement
-              key={statement.key}
-              value={statement} 
-              onChange={this.handleChangeStatement}
-            />);
+            <div style={{position: "relative"}}>
+              <div style={styles.header} onClick={() => this.handleInsertStatement(statement, {})}>&#43;</div>
+              <Statement
+                key={statement.key}
+                value={statement}
+                onChange={this.handleChangeStatement}
+              />
+              <span style={styles.header} onClick={() => this.handleRemoveStatement(statement)}>&#45;</span>
+            </div>
+          );
         })}
+        <span style={styles.header} onClick={() => this.handleInsertStatement({}, {type: "stem", key: Math.floor((Math.random() * 1000000000) + 1)})}>&#43;</span>
       </div>
     );
   }
