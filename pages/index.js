@@ -31,7 +31,15 @@ class Index extends React.Component {
               name: "",
               args: [],
               sequence: {
-                statements: []
+                statements: [{
+                  type: "constant-declaration",
+                  name: "someConstant",
+                  key: "2344",
+                  value: {
+                    type: "string",
+                    value: "hello world!"
+                  }
+                }]
               }
             }
           }]
@@ -41,14 +49,6 @@ class Index extends React.Component {
             type: "constant-declaration",
             name: "someConstant",
             key: "123",
-            value: {
-              type: "string",
-              value: "hello world!"
-            }
-          },{
-            type: "constant-declaration",
-            name: "someConstant",
-            key: "2344",
             value: {
               type: "string",
               value: "hello world!"

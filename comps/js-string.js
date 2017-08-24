@@ -1,6 +1,7 @@
 "use strict";
 
 import Radium from "radium";
+import Textify from "./textify";
 
 class StringStatement extends React.Component {
 
@@ -64,82 +65,25 @@ class StringStatement extends React.Component {
 
     const styles = {
       root: {
-        display: "inline-block",
-        color: "#ccf2b1"
-      },
-      inputFont: {
-        fontSize: "1rem",
-        color: "#ccf2b1",
-        fontFamily: "Fira Mono, Courier, Helvetica, sans-serif"
-      },
-      rounded: {
-        borderRadius: "5px"
-      },
-      shadow: {
-        boxShadow: "1px 1px 11px #ccf2b1"
+        display: "inline-block"
       },
       string: {
-        height: "1rem",
-        backgroundColor: "#4d4f5e"
-      },
-      inputContainer: {
-        display: "inline-block",
-        height: "1rem",
-        overflow: "hidden",
-        width: `${width}px`,
-        backgroundColor: "#4d4f5e"
-      },
-      input: {
-        background: "#4d4f5e",
-        border: "none",
-        height: "1rem",
-        paddingLeft: "5px",
-        width: `${width}px`
-      },
-      sizer: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        visibility: 'hidden',
-        height: 0,
-        overflow: 'scroll',
-        whiteSpace: 'pre'
+        backgroundColor: "#4d4f5e",
+        color: "#ccf2b1"
       }
     };
 
 
-    if (this.state.editing) {
-      return (
-        <div style={[styles.root]}>
-          <span style={[styles.string, styles.inputFont, styles.rounded, styles.shadow]}>
-            &quot;
-            <div
-              onBlur={this.handleBlur}
-              onKeyPress={this.handleKeyPress}
-              style={[styles.inputContainer]}
-            >
-              <input
-                value={str.value}
-                onChange={(e) => this.handleChange({value: e.target.value})}
-                type="text"
-                style={[styles.input, styles.inputFont]}
-                ref={(input) => { this.stringEditor = input; }}
-              />
-            </div>
-            &quot;
-            <span style={[styles.inputFont, styles.sizer]} ref={(sizer => {this.sizer = sizer})}>
-              {str.value}
-            </span>
-          </span>
-        </div>
-      );
-    }
-
     return (
-      <div style={styles.root}>
-        <span style={[styles.string, styles.inputFont, styles.rounded]} onClick={this.handleClick}>&quot;{str.value}&quot;</span>
+      <div style={[styles.root]}>
+        <Textify
+          style={styles.string}
+          value={str.value}
+          onChange={(e) => this.handleChange({value: e.target.value})}
+        />
       </div>
     );
+
   }
 }
 
