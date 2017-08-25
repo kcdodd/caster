@@ -3,8 +3,9 @@
 import Radium from "radium";
 import Statement from "./js-statement";
 import Textify from "./textify";
+import Selectify from "./selectify";
 
-class ConstantDeclarationStatement extends React.Component {
+class DefineStatement extends React.Component {
   constructor(props) {
     super(props);
 
@@ -37,6 +38,7 @@ class ConstantDeclarationStatement extends React.Component {
         boxShadow: `1px 1px 11px #2f3039`
       },
       keyword: {
+        backgroundColor: "#4d4f5e",
         color: "#dc83fb"
       },
       name: {
@@ -45,23 +47,36 @@ class ConstantDeclarationStatement extends React.Component {
       },
       equals: {
         color: "#69cdff"
+      },
+      top: {
+        display: "inline-block",
+        verticalAlign: "top"
       }
     };
 
-    const constant = this.props.value;
+    const definition = this.props.value;
+    const str = definition.constant ? "const" : "let";
 
     return (
       <div style={[styles.root, styles.rounded, styles.shadow]}>
-        <span style={styles.keyword}>const&nbsp;</span>
-        <Textify
-          style={styles.name}
-          value={constant.name}
-          regex={/^[a-zA-Z_][a-zA-Z0-9_]*$/}
-          onChange={(e) => this.handleChange({name: e.target.value})}
-        />
-        <span style={styles.equals}>&nbsp;=&nbsp;</span>
+        <div style={styles.top}>
+          <Selectify
+            value={str}
+            options={["const", "let"]}
+            onChange={newValue => this.handleChange({constant: newValue === "const"})}
+            style={styles.keyword}
+          />
+          &nbsp;
+          <Textify
+            style={styles.name}
+            value={definition.name}
+            regex={/^[a-zA-Z_][a-zA-Z0-9_]*$/}
+            onChange={(newValue) => this.handleChange({name: newValue})}
+          />
+          <span style={styles.equals}>&nbsp;=&nbsp;</span>
+        </div>
         <Statement
-          value={constant.value}
+          value={definition.value}
           onChange={(newValue) => this.handleChange({value: newValue})}
         />
       </div>
@@ -69,4 +84,4 @@ class ConstantDeclarationStatement extends React.Component {
   }
 }
 
-export default Radium(ConstantDeclarationStatement);
+export default Radium(DefineStatement);

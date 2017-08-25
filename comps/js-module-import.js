@@ -53,13 +53,13 @@ class ImportStatement extends React.Component {
         <Textify
           style={styles.name}
           value={imp.name}
-          onChange={(e) => this.handleChange({name: e.target.value})}
+          onChange={(newValue) => this.handleChange({name: newValue})}
         />
         <span style={styles.from}>&nbsp;from&nbsp;</span>
         <Textify
           style={styles.module}
           value={imp.module}
-          onChange={(e) => this.handleChange({module: e.target.value})}
+          onChange={(newValue) => this.handleChange({module: newValue})}
         />
       </div>
     );

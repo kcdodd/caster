@@ -61,31 +61,40 @@ class Sequence extends React.Component {
         height: "1.5rem",
         textAlign: "center",
         verticalAlign: "top",
-        fontSize: "1rem",
         color: "#ffffff",
-        fontFamily: "Fira Mono, Courier, Helvetica, sans-serif",
         cursor: "pointer"
       }
     };
 
     const sequence = this.props.value;
-
     return (
       <div style={styles.root}>
         {sequence.statements.map((statement, index) => {
           return (
             <div style={{position: "relative"}}>
-              <div style={styles.header} onClick={() => this.handleInsertStatement(statement, {})}>&#43;</div>
+              <i
+                className="fa fa-plus fa-fw" aria-label="Insert Control Statement"
+                style={styles.header}
+                onClick={() => this.handleInsertStatement(statement, {type: "control", key: Math.floor((Math.random() * 1000000000) + 1)})}
+              />
               <Statement
                 key={statement.key}
                 value={statement}
                 onChange={this.handleChangeStatement}
               />
-              <span style={styles.header} onClick={() => this.handleRemoveStatement(statement)}>&#45;</span>
+              <i
+                className="fa fa-minus fa-fw" aria-label="Remove Control Statement"
+                style={styles.header}
+                onClick={() => this.handleRemoveStatement(statement)}
+              />
             </div>
           );
         })}
-        <span style={styles.header} onClick={() => this.handleInsertStatement({}, {type: "stem", key: Math.floor((Math.random() * 1000000000) + 1)})}>&#43;</span>
+        <i
+          className="fa fa-plus" aria-label="Insert Control Statement"
+          style={styles.header}
+          onClick={() => this.handleInsertStatement({}, {type: "control", key: Math.floor((Math.random() * 1000000000) + 1)})}
+        />
       </div>
     );
   }

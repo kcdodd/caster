@@ -58,10 +58,15 @@ class StringStatement extends React.Component {
     )) : "";
   }
 
+  handleRemove = () => {
+    this.props.onChange ? this.props.onChange({
+      type: "expression"
+    }) : "";
+  }
+
   render() {
 
     const str = this.props.value;
-    const width = this.state.sizerWidth ? this.state.sizerWidth + 5 : 10;
 
     const styles = {
       root: {
@@ -79,7 +84,8 @@ class StringStatement extends React.Component {
         <Textify
           style={styles.string}
           value={str.value}
-          onChange={(e) => this.handleChange({value: e.target.value})}
+          onChange={(newValue) => this.handleChange({value: newValue})}
+          onRemove={this.handleRemove}
         />
       </div>
     );

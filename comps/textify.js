@@ -29,7 +29,7 @@ class Textify extends React.Component {
   styles = () => {
     const width = this.state.sizerWidth ? this.state.sizerWidth + 5 : 50;
     const color = this.props.style ? this.props.style.color || "#000000" : "#000000";
-    const shadow = `1px 1px 11px ${this.props.style ? this.props.style.color || "#000000" : "#000000"}`;
+    const shadow = `1px 1px 11px ${color}`;
     const background = this.props.style ? this.props.style.backgroundColor || "#ffffff" : "#ffffff";
 
 
@@ -71,21 +71,31 @@ class Textify extends React.Component {
         height: 0,
         overflow: 'scroll',
         whiteSpace: 'pre'
+      },
+      button: {
+        cursor: "pointer"
+      },
+      invalid: {
+        color: "#fb4727"
       }
     };
   }
 
-  handleClick = () => {
+  handleStartEdit = () => {
     this.setState({
-      editing: true
-    }, () => {
-      this.stringEditor.focus();
+      editing: true,
+      tmpValue: this.props.value,
+      valid: true
     });
   }
 
-  handleBlur = () => {
+  handleEndEdit = () => {
     this.setState({
       editing: false
+    }, () => {
+      if (this.props.onChange && this.state.valid) {
+        this.props.onChange(this.state.tmpValue);
+      }
     });
   }
 
@@ -93,18 +103,19 @@ class Textify extends React.Component {
     if (e.key === "Enter") {
       this.setState({
         editing: false
+      }, () => {
+        if (this.props.onChange && this.state.valid) {
+          this.props.onChange(this.state.tmpValue);
+        }
       });
     }
   }
 
   handleChange = (e) => {
-    if (this.props.regex && !this.props.regex.test(e.target.value)){
-      return;
-    }
-
-    if (this.props.onChange) {
-      this.props.onChange(e);
-    }
+    this.setState({
+      tmpValue: e.target.value,
+      valid: !this.props.regex || this.props.regex && this.props.regex.test(e.target.value)
+    });
   }
 
   render() {
@@ -113,30 +124,40 @@ class Textify extends React.Component {
     const styles = this.styles();
 
     if (this.state.editing) {
+      const invalid = !this.state.valid ? <i className="fa fa-ban fa-fw" style={styles.invalid} aria-label="invalid"/> : "";
+
       return (
-        <span style={[styles.string, styles.inputFont, styles.rounded, styles.shadow]}>
+        <span
+          style={[styles.string, styles.inputFont, styles.rounded, styles.shadow]}
+        >
           <div
-            onBlur={this.handleBlur}
             onKeyPress={this.handleKeyPress}
             style={[styles.inputContainer]}
           >
             <input
-              value={value}
+              value={this.state.tmpValue}
               onChange={this.handleChange}
+              onBlur={this.handleEndEdit}
               type="text"
               style={[styles.input, styles.inputFont]}
-              ref={(input) => { this.stringEditor = input; }}
+              ref={(input) => { input && input.focus(); }}
+              readOnly={this.props.onChange ? false : true}
             />
           </div>
           <span style={[styles.inputFont, styles.sizer]} ref={(sizer => {this.sizer = sizer})}>
-            {value}
+            {this.state.tmpValue}
           </span>
+          {invalid}
+          {this.props.onRemove ? <span>&nbsp;<i onClick={this.props.onRemove} className="fa fa-times fa-fw" style={styles.button} aria-label="Remove Expression"/></span> : ""}
         </span>
       );
     }
 
     return (
-      <span style={[styles.string, styles.inputFont, styles.rounded]} onClick={this.handleClick}>{value}</span>
+      <span style={[styles.string, styles.inputFont, styles.rounded]} onClick={this.handleStartEdit}>
+        {value.length > 0 ? value : "\"\""}
+        {this.props.onRemove ? <span>&nbsp;<i onClick={this.props.onRemove} className="fa fa-times fa-fw" style={styles.button} aria-label="Remove Expression"/></span> : ""}
+      </span>
     );
   }
 }

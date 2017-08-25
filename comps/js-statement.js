@@ -2,13 +2,13 @@
 
 import Radium from "radium";
 
-import Stem from "./js-stem";
+import Control from "./js-control";
+import Expression from "./js-expression";
 
 import Module from "./js-module.js";
 
-import VariableDeclarationStatement from "./js-variable-declaration";
+import DefineStatement from "./js-define";
 import VariableStatement from "./js-variable";
-import ConstantDeclarationStatement from "./js-constant-declaration";
 import ConstantStatement from "./js-constant";
 import AssignStatement from "./js-assign";
 
@@ -35,11 +35,11 @@ import ForOfStatement from "./js-for-of";
 
 const typeToComponent = type => {
   switch(type) {
-    case "stem": return Stem;
+    case "control": return Control;
+    case "expression": return Expression;
     case "module": return Module;
-    case "variable-declaration": return VariableDeclarationStatement;
+    case "define": return DefineStatement;
     case "variable": return VariableStatement;
-    case "constant-declaration": return ConstantDeclarationStatement;
     case "constant": return ConstantStatement;
     case "assign": return AssignStatement;
     case "boolean": return BooleanStatement;

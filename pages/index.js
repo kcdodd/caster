@@ -32,7 +32,8 @@ class Index extends React.Component {
               args: [],
               sequence: {
                 statements: [{
-                  type: "constant-declaration",
+                  type: "define",
+                  constant: true,
                   name: "someConstant",
                   key: "2344",
                   value: {
@@ -40,8 +41,9 @@ class Index extends React.Component {
                     value: "hello world!"
                   }
                 },{
-                  type: "constant-declaration",
-                  name: "someConstant",
+                  type: "define",
+                  constant: false,
+                  name: "someVariable",
                   key: "6544",
                   value: {
                     type: "string",
@@ -54,7 +56,8 @@ class Index extends React.Component {
         },
         sequence: {
           statements: [{
-            type: "constant-declaration",
+            type: "define",
+            constant: true,
             name: "someConstant",
             key: "123",
             value: {
@@ -100,8 +103,10 @@ class Index extends React.Component {
         <div style={styles.root}>
           <Head>
             <link href="https://fonts.googleapis.com/css?family=Fira+Mono" rel="stylesheet" />
+            <link href="static/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
           </Head>
           <Layout>
+            <div><i className="fa fa-home fa-fw" aria-hidden="true"/> Home</div>
             <Statement
               value={this.state.example}
               onChange={this.handleChange}

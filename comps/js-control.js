@@ -2,7 +2,7 @@
 
 import Radium from "radium";
 
-class Stem extends React.Component {
+class Control extends React.Component {
   constructor(props) {
     super(props);
 
@@ -44,20 +44,20 @@ class Stem extends React.Component {
       }
     };
 
-    const constant = this.props.value;
-
     return (
       <div style={[styles.root, styles.rounded, styles.shadow]}>
         <span style={styles.type} key="paste">paste&nbsp;</span>
-        <span style={styles.type} key="constant" onClick={() => this.handleChange({type: "constant-declaration", name: "newConstant", value: {type: "null"}})}>constant&nbsp;</span>
-        <span style={styles.type} key="variable" >variable&nbsp;</span>
-        <span style={styles.type} key="assignment" >assignment&nbsp;</span>
+        <span style={styles.type} key="define" onClick={() => this.handleChange({type: "define", name: "newConstant", value: {type: "expression"}})}>define&nbsp;</span>
+        <span style={styles.type} key="reassign" >reassign&nbsp;</span>
         <span style={styles.type} key="evaluate" >evaluate&nbsp;</span>
         <span style={styles.type} key="chain" >chain&nbsp;</span>
+        <span style={styles.type} key="if" >if&nbsp;</span>
+        <span style={styles.type} key="for" >for&nbsp;</span>
+        <span style={styles.type} key="while" >while&nbsp;</span>
         <span style={styles.type} key="return" >return&nbsp;</span>
       </div>
     );
   }
 }
 
-export default Radium(Stem);
+export default Radium(Control);
