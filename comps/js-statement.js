@@ -8,8 +8,6 @@ import Expression from "./js-expression";
 import Module from "./js-module.js";
 
 import DefineStatement from "./js-define";
-import VariableStatement from "./js-variable";
-import ConstantStatement from "./js-constant";
 import AssignStatement from "./js-assign";
 
 import BooleanStatement from "./js-boolean";

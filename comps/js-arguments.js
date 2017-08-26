@@ -5,36 +5,22 @@ import {findIndex} from "lodash/array";
 
 import Statement from "./js-statement";
 
-class Sequence extends React.Component {
+class Arguments extends React.Component {
 
-  handleChangeStatement = (newValue, oldValue) => {
-
-    let statements;
-
-    if (oldValue) {
-        statements = this.props.value.statements.map(curValue => {
-          return oldValue.key === curValue.key ? newValue : curValue;
-        });
-    }else{
-      statements = this.props.value.statements.map(curValue => {
-        return newValue.key === curValue.key ? newValue : curValue;
-      });
-    }
+  handleChangeStatement = newValue => {
 
     this.props.onChange ? this.props.onChange(Object.assign(
       {},
       this.props.value,
       {
-        statements
+        statements: this.props.value.statements.map(oldValue => {
+          return newValue.key === oldValue.key ? newValue : oldValue;
+        })
       }
     )) : "";
   }
 
   handleRemoveStatement = (removeValue) => {
-    if (removeValue.type !== "control") {
-      removeValue.editor.controlClipboard.push(removeValue);
-    }
-
     this.props.onChange ? this.props.onChange(Object.assign(
       {},
       this.props.value,
@@ -83,49 +69,42 @@ class Sequence extends React.Component {
       }
     };
 
-    const sequence = this.props.value;
-    const make = sequence.editor.make;
+    const args = this.props.arguments;
 
     return (
       <div style={styles.root}>
-        {sequence.statements.map((statement, index) => {
+        {args.map((argument, index) => {
           return (
-            <div
-              key={statement.key}
-              style={{position: "relative"}}
-            >
+            <div style={{position: "relative"}}>
               <i
-                className="fa fa-plus fa-fw"
-                aria-label="Insert Control Statement"
+                className="fa fa-plus fa-fw" aria-label="Insert Argument"
                 style={styles.header}
                 key={statement.key+"insert"}
-                onClick={() => this.handleInsertStatement(statement, make.control())}
+                onClick={() => this.handleInsertStatement(argument, {type: "argument", key: Math.floor((Math.random() * 1000000000) + 1)})}
               />
               <Statement
-
+                key={statement.key}
                 value={statement}
                 onChange={this.handleChangeStatement}
               />
               <i
-                className="fa fa-minus fa-fw"
-                aria-label="Remove Control Statement"
+                className="fa fa-minus fa-fw" aria-label="Remove Argument"
                 style={styles.header}
                 key={statement.key+"remove"}
-                onClick={() => this.handleRemoveStatement(statement)}
+                onClick={() => this.handleRemoveStatement(argument)}
               />
             </div>
           );
         })}
         <i
-          className="fa fa-plus"
-          aria-label="Insert Control Statement"
+          className="fa fa-plus" aria-label="Insert Argument"
           style={styles.header}
           key="end"
-          onClick={() => this.handleInsertStatement({}, make.control())}
+          onClick={() => this.handleInsertStatement({}, {type: "argument", key: Math.floor((Math.random() * 1000000000) + 1)})}
         />
       </div>
     );
   }
 }
 
-export default Radium(Sequence);
+export default Radium(Arguments);

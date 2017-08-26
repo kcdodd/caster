@@ -4,11 +4,7 @@ import Radium from "radium";
 import Textify from "./textify";
 
 class NullStatement extends React.Component {
-  handleRemove = () => {
-    this.props.onChange ? this.props.onChange({
-      type: "expression"
-    }) : "";
-  }
+
   render() {
 
     const styles = {
@@ -27,7 +23,7 @@ class NullStatement extends React.Component {
         <Textify
           style={styles.null}
           value={"null"}
-          onRemove={this.handleRemove}
+          onRemove={() => {this.props.onRemove ? this.props.onRemove(this.props.value) : ""}}
         />
       </div>
     );

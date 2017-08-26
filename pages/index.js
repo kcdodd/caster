@@ -6,67 +6,96 @@ import Radium, {Style, StyleRoot} from "radium";
 import Layout from "../comps/layout";
 import Statement from "../comps/js-statement";
 
+const editor = {
+  controlClipboard : [],
+  expressionClipboard : [],
+  focused : null,
+  generateKey: ((initialKey) => {
+    let nextKey = initialKey;
+    return () => {
+      return "" + (nextKey++);
+    }
+  })(0)
+};
+
+editor.make = {
+  module: () => ({
+    type: "module",
+    imports: {
+      editor,
+      statements: []
+    },
+    sequence: {
+      editor,
+      statements: []
+    },
+    exports: {
+      editor,
+      statements: []
+    },
+    editor,
+    key: editor.generateKey()
+  }),
+  control: () => ({
+    type: "control",
+    editor,
+    key: editor.generateKey()
+  }),
+  expression: () => ({
+    type: "expression",
+    editor,
+    key: editor.generateKey()
+  }),
+  define: ({name=null, constant=null, value=null} = {}) => ({
+    type: "define",
+    name: name || "newConstant",
+    constant: constant || true,
+    value: value || editor.make.expression(),
+    editor,
+    key: editor.generateKey()
+  }),
+  null: () => ({
+    type: "null",
+    editor,
+    key: editor.generateKey()
+  }),
+  boolean: ({value=null} = {}) => ({
+    type: "boolean",
+    value: typeof value === "boolean" ? value : false,
+    editor,
+    key: editor.generateKey()
+  }),
+  number: ({value=null} = {}) => ({
+    type: "number",
+    value: typeof value === "number" ? value : 0,
+    editor,
+    key: editor.generateKey()
+  }),
+  string: ({value=null} = {}) => ({
+    type: "string",
+    value: typeof value === "string" ? value : "",
+    editor,
+    key: editor.generateKey()
+  }),
+  "function": ({name=null, args=null} = {}) => ({
+    type: "function",
+    name: name || "",
+    args: args || [],
+    sequence:{
+      editor,
+      statements:[]
+    },
+    editor,
+    key: editor.generateKey()
+  })
+};
+
 
 class Index extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      example : {
-        type: "module",
-        imports: {
-          statements: [{
-            type: "import",
-            key: "42344",
-            name: "test1",
-            module: "somemodule"
-          }]
-        },
-        exports: {
-          statements: [{
-            type: "export",
-            name: "default",
-            key: "55234",
-            value: {
-              type: "function",
-              name: "",
-              args: [],
-              sequence: {
-                statements: [{
-                  type: "define",
-                  constant: true,
-                  name: "someConstant",
-                  key: "2344",
-                  value: {
-                    type: "string",
-                    value: "hello world!"
-                  }
-                },{
-                  type: "define",
-                  constant: false,
-                  name: "someVariable",
-                  key: "6544",
-                  value: {
-                    type: "string",
-                    value: "hello world!"
-                  }
-                }]
-              }
-            }
-          }]
-        },
-        sequence: {
-          statements: [{
-            type: "define",
-            constant: true,
-            name: "someConstant",
-            key: "123",
-            value: {
-              type: "string",
-              value: "hello world!"
-            }
-          }]
-        }
-      }
+      example : editor.make.module()
     };
   }
 
@@ -106,7 +135,23 @@ class Index extends React.Component {
             <link href="static/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
           </Head>
           <Layout>
-            <div><i className="fa fa-home fa-fw" aria-hidden="true"/> Home</div>
+            <div
+              style={{cursor: "pointer"}}
+              onClick={() => {
+                while(editor.controlClipboard.length) {
+                  editor.controlClipboard.pop();
+                }
+
+                while(editor.expressionClipboard.length) {
+                  editor.expressionClipboard.pop();
+                }
+
+                //
+                this.forceUpdate();
+              }}
+            >
+              <i className="fa fa-trash" style aria-label="Empty Clipboard"></i>({editor.controlClipboard.length + editor.expressionClipboard.length})
+            </div>
             <Statement
               value={this.state.example}
               onChange={this.handleChange}

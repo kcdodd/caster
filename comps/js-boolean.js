@@ -14,12 +14,6 @@ class BooleanStatement extends React.Component {
     )) : "";
   }
 
-  handleRemove = () => {
-    this.props.onChange ? this.props.onChange({
-      type: "expression"
-    }) : "";
-  }
-
   render() {
 
     const bool = this.props.value;
@@ -38,7 +32,7 @@ class BooleanStatement extends React.Component {
         value={str}
         options={["true", "false"]}
         onChange={newValue => this.handleChange({value: newValue === "true"})}
-        onRemove={this.handleRemove}
+        onRemove={() => {this.props.onRemove ? this.props.onRemove(this.props.value) : ""}}
         style={styles.root}
       />
     );

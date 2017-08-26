@@ -58,12 +58,6 @@ class NumberStatement extends React.Component {
     )) : "";
   }
 
-  handleRemove = () => {
-    this.props.onChange ? this.props.onChange({
-      type: "expression"
-    }) : "";
-  }
-
   render() {
 
     const num = this.props.value;
@@ -86,7 +80,7 @@ class NumberStatement extends React.Component {
           value={"" + num.value}
           regex={/^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$/}
           onChange={(newValue) => this.handleChange({value: parseFloat(newValue)})}
-          onRemove={this.handleRemove}
+          onRemove={() => {this.props.onRemove ? this.props.onRemove(this.props.value) : ""}}
         />
       </div>
     );

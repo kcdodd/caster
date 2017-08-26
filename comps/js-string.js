@@ -58,12 +58,6 @@ class StringStatement extends React.Component {
     )) : "";
   }
 
-  handleRemove = () => {
-    this.props.onChange ? this.props.onChange({
-      type: "expression"
-    }) : "";
-  }
-
   render() {
 
     const str = this.props.value;
@@ -85,7 +79,7 @@ class StringStatement extends React.Component {
           style={styles.string}
           value={str.value}
           onChange={(newValue) => this.handleChange({value: newValue})}
-          onRemove={this.handleRemove}
+          onRemove={() => {this.props.onRemove ? this.props.onRemove(this.props.value) : ""}}
         />
       </div>
     );

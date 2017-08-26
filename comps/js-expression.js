@@ -44,17 +44,23 @@ class Expression extends React.Component {
       }
     };
 
+    const editor = this.props.value.editor;
+    const make = this.props.value.editor.make;
+
+    const paste = <span style={styles.type} key="paste" onClick={() => this.handleChange(editor.expressionClipboard.pop())}>paste ({editor.expressionClipboard.length})</span>;
+
     return (
       <div style={[styles.root, styles.rounded, styles.shadow]}>
-        <span style={styles.type} key="paste">paste</span>
-        <span style={styles.type} key="null" onClick={() => this.handleChange({type: "null"})}>null</span>
-        <span style={styles.type} key="boolean" onClick={() => this.handleChange({type: "boolean", value: false})}>boolean</span>
-        <span style={styles.type} key="number" onClick={() => this.handleChange({type: "number", value: 0})}>number</span>
-        <span style={styles.type} key="string" onClick={() => this.handleChange({type: "string", value: ""})}>string</span>
+        {editor.expressionClipboard.length > 0 ? paste : ""}
+        <span style={styles.type} key="null" onClick={() => this.handleChange(make.null())}>null</span>
+        <span style={styles.type} key="boolean" onClick={() => this.handleChange(make.boolean())}>boolean</span>
+        <span style={styles.type} key="number" onClick={() => this.handleChange(make.number())}>number</span>
+        <span style={styles.type} key="string" onClick={() => this.handleChange(make.string())}>string</span>
         <span style={styles.type} key="object" >object</span>
         <span style={styles.type} key="array" >array</span>
-        <span style={styles.type} key="function" >function</span>
+        <span style={styles.type} key="function" onClick={() => this.handleChange(make.function())}>function</span>
         <span style={styles.type} key="evaluate" >evaluate</span>
+        <span style={styles.type} key="symbol" >symbol</span>
       </div>
     );
   }

@@ -22,6 +22,14 @@ class DefineStatement extends React.Component {
     )) : "";
   }
 
+  handleRemoveValue = (removeValue) => {
+    if (removeValue.type !== "expression") {
+      removeValue.editor.expressionClipboard.push(removeValue);
+    }
+
+    this.handleChange({value: this.props.value.editor.make.expression()});
+  }
+
   render() {
 
     const styles = {
@@ -78,6 +86,7 @@ class DefineStatement extends React.Component {
         <Statement
           value={definition.value}
           onChange={(newValue) => this.handleChange({value: newValue})}
+          onRemove={this.handleRemoveValue}
         />
       </div>
     );

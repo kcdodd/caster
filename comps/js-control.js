@@ -16,7 +16,7 @@ class Control extends React.Component {
       {},
       this.props.value,
       newValue
-    )) : "";
+    ), this.props.value) : "";
   }
 
   render() {
@@ -44,17 +44,22 @@ class Control extends React.Component {
       }
     };
 
+    const editor = this.props.value.editor;
+    const maker = this.props.value.editor.make;
+
+    const paste = <span style={styles.type} key="paste" onClick={() => this.handleChange(editor.controlClipboard.pop())}>paste ({editor.controlClipboard.length})</span>;
+
     return (
       <div style={[styles.root, styles.rounded, styles.shadow]}>
-        <span style={styles.type} key="paste">paste&nbsp;</span>
-        <span style={styles.type} key="define" onClick={() => this.handleChange({type: "define", name: "newConstant", value: {type: "expression"}})}>define&nbsp;</span>
-        <span style={styles.type} key="reassign" >reassign&nbsp;</span>
-        <span style={styles.type} key="evaluate" >evaluate&nbsp;</span>
-        <span style={styles.type} key="chain" >chain&nbsp;</span>
-        <span style={styles.type} key="if" >if&nbsp;</span>
-        <span style={styles.type} key="for" >for&nbsp;</span>
-        <span style={styles.type} key="while" >while&nbsp;</span>
-        <span style={styles.type} key="return" >return&nbsp;</span>
+        {editor.controlClipboard.length > 0 ? paste : ""}
+        <span style={styles.type} key="define" onClick={() => this.handleChange(maker.define())}>define</span>
+        <span style={styles.type} key="conditional" >conditional</span>
+        <span style={styles.type} key="iterate" >iterate</span>
+        <span style={styles.type} key="reassign" >reassign</span>
+        <span style={styles.type} key="evaluate" >evaluate</span>
+        <span style={styles.type} key="access" >access</span>
+        <span style={styles.type} key="chain" >chain</span>
+        <span style={styles.type} key="return" >return</span>
       </div>
     );
   }
