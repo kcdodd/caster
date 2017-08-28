@@ -13,42 +13,6 @@ class StringStatement extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.updateInputWidth();
-  }
-
-  componentDidUpdate (prevProps, prevState) {
-    this.updateInputWidth();
-  }
-
-  updateInputWidth = () => {
-    if (this.sizer && this.sizer.scrollWidth !== this.state.sizerWidth) {
-      this.setState({sizerWidth: this.sizer.scrollWidth})
-    }
-  }
-
-  handleClick = () => {
-    this.setState({
-      editing: true
-    }, () => {
-      this.stringEditor.focus();
-    });
-  }
-
-  handleBlur = () => {
-    this.setState({
-      editing: false
-    });
-  }
-
-  handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      this.setState({
-        editing: false
-      });
-    }
-  }
-
   handleChange = (newValue) => {
 
     this.props.onChange ? this.props.onChange(Object.assign(

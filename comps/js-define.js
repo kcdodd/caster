@@ -1,6 +1,8 @@
 "use strict";
 
 import Radium from "radium";
+
+import {editor} from "../editor";
 import Statement from "./js-statement";
 import Textify from "./textify";
 import Selectify from "./selectify";
@@ -24,10 +26,10 @@ class DefineStatement extends React.Component {
 
   handleRemoveValue = (removeValue) => {
     if (removeValue.type !== "expression") {
-      removeValue.editor.expressionClipboard.push(removeValue);
+      editor.expressionClipboard.push(removeValue);
     }
 
-    this.handleChange({value: this.props.value.editor.make.expression()});
+    this.handleChange({value: editor.make.expression()});
   }
 
   render() {

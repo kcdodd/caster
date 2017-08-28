@@ -1,6 +1,7 @@
 "use strict";
 
 import Radium from "radium";
+import {editor} from "../editor";
 
 class Textify extends React.Component {
 
@@ -18,6 +19,10 @@ class Textify extends React.Component {
 
   componentDidUpdate (prevProps, prevState) {
     this.updateInputWidth();
+  }
+
+  componentWillUnmount = () => {
+    this.cancelClaimFocus ? this.cancelClaimFocus() : "";
   }
 
   updateInputWidth = () => {
@@ -82,6 +87,12 @@ class Textify extends React.Component {
   }
 
   handleStartEdit = () => {
+    const that = this;
+
+    this.cancelClaimFocus = editor.claimFocus(() => {
+      that.handleEndEdit();
+    });
+
     this.setState({
       editing: true,
       tmpValue: this.props.value,
@@ -90,6 +101,8 @@ class Textify extends React.Component {
   }
 
   handleEndEdit = () => {
+    this.cancelClaimFocus ? this.cancelClaimFocus() : "";
+
     this.setState({
       editing: false
     }, () => {
@@ -101,13 +114,7 @@ class Textify extends React.Component {
 
   handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      this.setState({
-        editing: false
-      }, () => {
-        if (this.props.onChange && this.state.valid) {
-          this.props.onChange(this.state.tmpValue);
-        }
-      });
+      this.handleEndEdit();
     }
   }
 
@@ -137,7 +144,6 @@ class Textify extends React.Component {
             <input
               value={this.state.tmpValue}
               onChange={this.handleChange}
-              onBlur={this.handleEndEdit}
               type="text"
               style={[styles.input, styles.inputFont]}
               ref={(input) => { input && input.focus(); }}
@@ -156,7 +162,6 @@ class Textify extends React.Component {
     return (
       <span style={[styles.string, styles.inputFont, styles.rounded]} onClick={this.handleStartEdit}>
         {value.length > 0 ? value : "\"\""}
-        {this.props.onRemove ? <span>&nbsp;<i onClick={this.props.onRemove} className="fa fa-times fa-fw" style={styles.button} aria-label="Remove Expression"/></span> : ""}
       </span>
     );
   }

@@ -3,6 +3,7 @@
 import Radium from "radium";
 import {findIndex} from "lodash/array";
 
+import {editor} from "../editor";
 import Statement from "./js-statement";
 
 class Sequence extends React.Component {
@@ -32,7 +33,7 @@ class Sequence extends React.Component {
 
   handleRemoveStatement = (removeValue) => {
     if (removeValue.type !== "control") {
-      removeValue.editor.controlClipboard.push(removeValue);
+      editor.controlClipboard.push(removeValue);
     }
 
     this.props.onChange ? this.props.onChange(Object.assign(
@@ -84,7 +85,6 @@ class Sequence extends React.Component {
     };
 
     const sequence = this.props.value;
-    const make = sequence.editor.make;
 
     return (
       <div style={styles.root}>
@@ -99,7 +99,7 @@ class Sequence extends React.Component {
                 aria-label="Insert Control Statement"
                 style={styles.header}
                 key={statement.key+"insert"}
-                onClick={() => this.handleInsertStatement(statement, make.control())}
+                onClick={() => this.handleInsertStatement(statement, editor.make.control())}
               />
               <Statement
 
@@ -121,7 +121,7 @@ class Sequence extends React.Component {
           aria-label="Insert Control Statement"
           style={styles.header}
           key="end"
-          onClick={() => this.handleInsertStatement({}, make.control())}
+          onClick={() => this.handleInsertStatement({}, editor.make.control())}
         />
       </div>
     );

@@ -2,6 +2,8 @@
 
 import Radium from "radium";
 
+import {editor} from "../editor";
+
 class Control extends React.Component {
   constructor(props) {
     super(props);
@@ -44,15 +46,12 @@ class Control extends React.Component {
       }
     };
 
-    const editor = this.props.value.editor;
-    const maker = this.props.value.editor.make;
-
     const paste = <span style={styles.type} key="paste" onClick={() => this.handleChange(editor.controlClipboard.pop())}>paste ({editor.controlClipboard.length})</span>;
 
     return (
       <div style={[styles.root, styles.rounded, styles.shadow]}>
         {editor.controlClipboard.length > 0 ? paste : ""}
-        <span style={styles.type} key="define" onClick={() => this.handleChange(maker.define())}>define</span>
+        <span style={styles.type} key="define" onClick={() => this.handleChange(editor.make.define())}>define</span>
         <span style={styles.type} key="conditional" >conditional</span>
         <span style={styles.type} key="iterate" >iterate</span>
         <span style={styles.type} key="reassign" >reassign</span>

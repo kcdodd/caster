@@ -1,6 +1,7 @@
 "use strict";
 
 import Radium from "radium";
+import {editor} from "../editor";
 
 class Selectify extends React.Component {
   constructor(props) {
@@ -11,13 +12,25 @@ class Selectify extends React.Component {
     };
   }
 
+  componentWillUnmount = () => {
+    this.cancelClaimFocus ? this.cancelClaimFocus() : "";
+  }
+
   handleStartEdit = () => {
+    const that = this;
+
+    this.cancelClaimFocus = editor.claimFocus(() => {
+      that.handleEndEdit();
+    });
+
     this.setState({
       editing: true
     });
   }
 
   handleEndEdit = () => {
+    this.cancelClaimFocus ? this.cancelClaimFocus() : "";
+
     this.setState({
       editing: false
     });
@@ -81,7 +94,6 @@ class Selectify extends React.Component {
               value={this.props.value}
               style={styles.select}
               onChange={(e) => {this.props.onChange ? this.props.onChange(e.target.value) : ""}}
-              onBlur={this.handleEndEdit}
               ref={(input) => { input && input.focus(); }}
             >
               {this.props.options.map(o => {
@@ -97,7 +109,6 @@ class Selectify extends React.Component {
     return (
       <span style={[styles.string, styles.rounded]} onClick={this.handleStartEdit}>
         {this.props.value}
-        {this.props.onRemove ? <span>&nbsp;<i onClick={this.props.onRemove} className="fa fa-times fa-fw" style={styles.button} aria-label="Remove Expression"/></span> : ""}
       </span>
     );
   }
