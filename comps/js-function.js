@@ -49,7 +49,7 @@ class FunctionStatement extends React.Component {
         borderRadius: "5px"
       },
       remove: {
-        color: "#f7c323",
+        color: "#d0b665",
         textAlign: "right"
       },
       button: {

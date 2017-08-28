@@ -68,7 +68,7 @@ class ObjectExpression extends React.Component {
       root: {
         display: "inline-block",
         margin: "3px 3px",
-        backgroundColor: "#484e7d",
+        backgroundColor: "#426256",
         borderLeft: "2px solid #ccf2b1",
         borderRight: "2px solid #77defa",
       },
@@ -83,14 +83,14 @@ class ObjectExpression extends React.Component {
         height: "1.5rem",
         textAlign: "center",
         verticalAlign: "top",
-        color: "#7781cd",
+        color: "#79b19c",
         cursor: "pointer",
         ":hover": {
           color: "#ffffff",
         }
       },
       remove: {
-        color: "#77defa",
+        color: "#79b19c",
         textAlign: "right"
       },
       button: {
@@ -102,7 +102,7 @@ class ObjectExpression extends React.Component {
 
     return (
       <div style={[styles.root, styles.rounded]}>
-        {this.props.onRemove ? <div style={styles.remove}>&nbsp;<i onClick={() => {this.props.onRemove ? this.props.onRemove(this.props.value) : ""}} className="fa fa-times fa-fw" style={styles.button} aria-label="Remove Expression"/></div> : ""}
+        {this.props.onRemove ? <div style={styles.remove}>&nbsp;<i onClick={() => {this.props.onRemove ? this.props.onRemove(this.props.value) : ""}} className="fa fa-times fa-fw" style={styles.button} aria-label="Remove Object"/></div> : ""}
         {object.properties.map((property, index) => {
           return (
             <div

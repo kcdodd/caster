@@ -18,7 +18,7 @@ class Expression extends React.Component {
       {},
       this.props.value,
       newValue
-    )) : "";
+    ), this.props.value) : "";
   }
 
   render() {
@@ -58,7 +58,7 @@ class Expression extends React.Component {
         <span style={styles.type} key="number" onClick={() => this.handleChange(editor.make.number())}>number</span>
         <span style={styles.type} key="string" onClick={() => this.handleChange(editor.make.string())}>string</span>
         <span style={styles.type} key="object" onClick={() => this.handleChange(editor.make.object())}>object</span>
-        <span style={styles.type} key="array" >array</span>
+        <span style={styles.type} key="array" onClick={() => this.handleChange(editor.make.array())}>array</span>
         <span style={styles.type} key="function" onClick={() => this.handleChange(editor.make.function())}>function</span>
         <span style={styles.type} key="evaluate" >evaluate</span>
         <span style={styles.type} key="symbol" >symbol</span>

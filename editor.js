@@ -100,6 +100,11 @@ editor.make = {
     properties: [],
     key: editor.generateKey()
   }),
+  array: () => ({
+    type: "array",
+    elements: [],
+    key: editor.generateKey()
+  })
 };
 
 export {editor};

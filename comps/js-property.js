@@ -32,7 +32,7 @@ class PropertyStatement extends React.Component {
         display: "inline-block",
         padding: "3px",
         margin: "1px 1px",
-        backgroundColor: "#767db8"
+        backgroundColor: "#629582"
       },
       rounded: {
         borderRadius: "5px"
@@ -47,18 +47,24 @@ class PropertyStatement extends React.Component {
       colon: {
         color: "#69cdff"
       },
+      top: {
+        display: "inline-block",
+        verticalAlign: "top"
+      }
     };
 
     const property = this.props.value;
 
     return (
       <div style={[styles.root, styles.rounded, styles.shadow]}>
-        <Textify
-          style={styles.name}
-          value={property.name}
-          onChange={(newValue) => this.handleChange({name: newValue})}
-        />
-        <span style={styles.colon}>&nbsp;:&nbsp;</span>
+        <div style={styles.top}>
+          <Textify
+            style={styles.name}
+            value={property.name}
+            onChange={(newValue) => this.handleChange({name: newValue})}
+          />
+          <span style={styles.colon}>&nbsp;:&nbsp;</span>
+        </div>
         <Statement
           value={property.value}
           onChange={(newValue) => this.handleChange({value: newValue})}
