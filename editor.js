@@ -5,6 +5,7 @@
 const editor = {
   controlClipboard : [],
   expressionClipboard : [],
+  propertyClipboard: [],
   claimFocus : (() => {
     let lastLoseCLaim = null;
 
@@ -87,7 +88,18 @@ editor.make = {
       statements:[]
     },
     key: editor.generateKey()
-  })
+  }),
+  property: ({name=null, value=null} = {}) => ({
+    type: "property",
+    name: name || "newProperty",
+    value: value || editor.make.expression(),
+    key: editor.generateKey()
+  }),
+  object: () => ({
+    type: "object",
+    properties: [],
+    key: editor.generateKey()
+  }),
 };
 
 export {editor};

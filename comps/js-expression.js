@@ -57,7 +57,7 @@ class Expression extends React.Component {
         <span style={styles.type} key="boolean" onClick={() => this.handleChange(editor.make.boolean())}>boolean</span>
         <span style={styles.type} key="number" onClick={() => this.handleChange(editor.make.number())}>number</span>
         <span style={styles.type} key="string" onClick={() => this.handleChange(editor.make.string())}>string</span>
-        <span style={styles.type} key="object" >object</span>
+        <span style={styles.type} key="object" onClick={() => this.handleChange(editor.make.object())}>object</span>
         <span style={styles.type} key="array" >array</span>
         <span style={styles.type} key="function" onClick={() => this.handleChange(editor.make.function())}>function</span>
         <span style={styles.type} key="evaluate" >evaluate</span>

@@ -19,15 +19,19 @@ class FunctionStatement extends React.Component {
 
     const styles = {
       root: {
-        display: "block",
-        padding: "3px 0px"
+        display: "inline-block",
+        padding: "3px 3px",
+        margin: "3px 3px",
+        backgroundColor: "#7d7048",
+        borderLeft: "2px solid #d0b665",
+        borderRight: "2px solid #d06138",
       },
       args: {
         display: "inline-block",
         color: "#bfbfbf",
         verticalAlign: "top",
         backgroundColor: "#999899",
-        borderLeft: "2px solid #b877fa",
+        borderLeft: "2px solid #e2d961",
         borderRight: "2px solid #77defa"
       },
       arrow: {
@@ -45,8 +49,10 @@ class FunctionStatement extends React.Component {
         borderRadius: "5px"
       },
       remove: {
-        color: "#77defa",
-        textAlign: "right",
+        color: "#f7c323",
+        textAlign: "right"
+      },
+      button: {
         cursor: "pointer"
       }
     };
@@ -54,7 +60,7 @@ class FunctionStatement extends React.Component {
     const f = this.props.value;
 
     return (
-      <div style={[styles.root]}>
+      <div style={[styles.root, styles.rounded]}>
         {this.props.onRemove ? <div style={styles.remove}>&nbsp;<i onClick={() => {this.props.onRemove ? this.props.onRemove(this.props.value) : ""}} className="fa fa-times fa-fw" style={styles.button} aria-label="Remove Expression"/></div> : ""}
         &nbsp;&nbsp;
         <div style={[styles.args, styles.rounded]}>
